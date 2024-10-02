@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Echo — Home</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <nav class="flex space-between pX-128 pY-16" id="nav">
+        <a href="/">
+            <div class="flex gap-8">
+                <img src="https://cdn.discordapp.com/avatars/1287275179382276199/f61fa3d2e1260536f738b28ffcc484bc.png?format=webp&quality=lossless&width=896&height=896" alt="Logo" width="35" height="38">
+                <h4>Echo</h4>
+                <defs>
+                    <linearGradient id="paint0_linear_6_17" x1="17.7879" y1="0" x2="17.7879" y2="32.8788" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#cc33ff" />
+                        <stop offset="1" stop-color="#a4c8fc" stop-opacity="0.32"></stop>
+                    </linearGradient>
+                </defs>
+            </div>
+        </a>
+
+        <div class="flex gap-32">
+            <a href="/">Home</a>
+            <a href="/discord">Discord</a>
+        </div>
+
+        <a class="button secondary small hamburger menu-icon-open" onclick="nav();" id="menu-icon">
+            <ion-icon name="menu-outline"></ion-icon>
+        </a>
+
+        <a class="button secondary small hamburger" onclick="nav();" id="close-icon">
+            <ion-icon name="close-outline"></ion-icon>
+        </a>
+    </nav>
+
+    <section class="landing">
+        <div class="flex col gap-32">
+            <div class="flex col gap-16 center">
+                <h1>Earn rewards at Echo</h1>
+                <p>Introducing our Fortnite giftbot, crafted to enhance your gaming experience without breaking the bank.</p>
+            </div>
+
+            <a href="/discord" class="button">Join Echo Today</a>
+        </div>
+
+        <style>
+            .container {
+                background-color: #f5f5f5; /* Light background for contrast */
+                border-radius: 10px; /* Rounded corners for the container */
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            }
+
+            .command-input {
+                width: 300px; /* Initial width */
+                padding: 10px;
+                border: 2px solid #b96cff; /* Blue border */
+                border-radius: 5px;
+                font-size: 16px;
+                transition: all 0.3s ease; /* Smooth transition */
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+                display: block; /* Centers input if needed */
+                margin: 0 auto; /* Center input on the page */
+            }
+
+            .command-input:focus {
+                width: 310px; /* Enlarge width by 10 pixels on focus */
+                padding: 12px; /* Increase padding */
+                border-color: #b96cff; /* Darker blue on focus */
+                outline: none; /* Remove default outline */
+                box-shadow: 0 4px 15px rgba(63, 198, 250, 255); /* Enhance shadow on focus */
+            }
+        </style>
+
+    </section>
+
+		<hr class="separator">
+	<style>
+		.separator {
+				border: none;          /* Remove default border */
+				height: 1px;          /* Set height of the line */
+				background-color: #242424; /* Set the color of the line */
+				margin: 16px 0;       /* Add margin above and below the line */
+		}
+	</style>
+    <section class="features center" style="margin-top: 40px;"> <!-- Add margin-top for separation -->
+        <div class="flex col gap-16 center">
+            <h2>Game cosmetics for low prices</h2>
+            <p>With an easy-to-use interface, you and your friends can quickly access and claim skins, V-Bucks, and exclusive items, all while enjoying significant savings</p>
+        </div>
+
+        <div class="flex wrap gap-32">
+            <div class="flex left col container bounce gap-16 p-32">
+                <div class="flex center container small highest p-8">
+                    <ion-icon name="flash-outline"></ion-icon>
+                </div>
+
+                <div class="flex left col gap-8">
+                    <h4>Automatic Gift Sending</h4>
+                    <p>Send your own gifts whenever you like.</p>
+                </div>
+            </div>
+
+            <div class="flex left col container bounce gap-16 p-32">
+                <div class="flex center container small highest p-8">
+                    <ion-icon name="flash-outline"></ion-icon>
+                </div>
+
+                <div class="flex left col gap-8">
+                    <h4>Earn Rewards</h4>
+                    <p>Earn free echo-credits at your own pace.</p>
+                </div>
+            </div>
+
+            <div class="flex left col container bounce gap-16 p-32">
+                <div class="flex center container small highest p-8">
+                    <ion-icon name="flash-outline"></ion-icon>
+                </div>
+
+                <div class="flex left col gap-8">
+                    <h4>Cheap credit rates</h4>
+                    <p>Buy echo-credits for a cheap rate than retail.</p>
+                </div>
+            </div>
+
+            <div class="flex left col container bounce gap-16 p-32">
+                <div class="flex center container small highest p-8">
+                    <ion-icon name="flash-outline"></ion-icon>
+                </div>
+
+                <div class="flex left col gap-8">
+                    <h4>Tons of commands</h4>
+                    <p>Lots of fun user-friendly commands that will elevate your experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="flex col gap-16 center">
+            <p>© 2024 Echo. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
