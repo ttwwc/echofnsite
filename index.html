@@ -38,15 +38,115 @@
         </a>
     </nav>
 
-    <section class="landing">
-        <div class="flex col gap-32">
-            <div class="flex col gap-16 center">
-                <h1>Earn rewards at Echo</h1>
-                <p>Introducing our Fortnite giftbot, crafted to enhance your gaming experience without breaking the bank.</p>
-            </div>
+            <section class="landing">
+                <div class="flex col gap-32">
+                    <div class="flex col gap-16 center">
+                        <div class="background">
+                            <h1>Earn rewards at Echo</h1>
+                            <p>Introducing our Fortnite giftbot, crafted to enhance your gaming experience without breaking the bank.</p>
+                            <img src="https://www.pngplay.com/wp-content/uploads/12/Fornite-Galaxy-Skin-Fortnite-PNG-Clipart-Background.png" alt="Background Image" class="foreground-image"> 
+                            </div>
+                        <a href="https://discord.com/invite/echofn" class="button">Join Echo Today</a>
+                    </div>
+                </div>
+            </section>
 
-            <a href="https://discord.com/invite/echofn" class="button">Join Echo Today</a>
-        </div>
+            <style>
+                /* For Chrome, Safari, and Opera */
+                ::-webkit-scrollbar {
+                    width: 8px; /* Width of the scrollbar */
+                }
+
+                /* Track */
+                ::-webkit-scrollbar-track {
+                    background: transparent; /* Background of the track */
+                }
+
+                /* Handle */
+                ::-webkit-scrollbar-thumb {
+                    background: rgba(0, 0, 0, 0.5); /* Color of the handle */
+                    border-radius: 10px; /* Rounded corners for the handle */
+                }
+
+                /* Hover effect for the scrollbar handle */
+                ::-webkit-scrollbar-thumb:hover {
+                    background: rgba(0, 0, 0, 0.7); /* Darker color on hover */
+                }
+
+                /* For IE and Edge */
+                body {
+                    scrollbar-width: thin; /* Makes scrollbar thinner */
+                    scrollbar-color: transparent transparent; /* Transparent scrollbar */
+                }
+
+                /* For Firefox */
+                @supports (scrollbar-color: transparent transparent) {
+                    /* Use the same properties for Firefox */
+                    body {
+                        scrollbar-color: transparent transparent; /* Transparent scrollbar */
+                    }
+                }
+                
+                .background {
+                    position: relative; /* Make the div a positioning context */
+                    color: white; /* Text color */
+                    padding: 50px; /* Space around the text */
+                    max-width: 800px; /* Set a maximum width */
+                    text-align: center; /* Center the text */
+                    height: 100px; /* Set a height for the div */
+                }
+
+                .foreground-image {
+                    position: absolute; /* Position the image absolutely */
+                    top: -30px; /* Adjust this value to move the image down */
+                    right: -190px; /* Adjust this value to move the image left */
+                    width: 60%; /* Increase width to cover the area */
+                    height: auto; /* Maintain aspect ratio */
+                    opacity: 0.3; /* Adjust opacity to blend with the page */
+                    z-index: 0; /* Ensure the image is behind the text */
+                }
+
+                /* For medium screens */
+                @media (max-width: 768px) {
+                    .foreground-image {
+                        top: -30px; /* Adjust position for smaller screens */
+                        right: -150px; /* Adjust position for smaller screens */
+                        width: 60%; /* Adjust width for smaller screens */
+                    }
+                }
+
+                /* For small screens */
+                @media (max-width: 480px) {
+                    .foreground-image {
+                        top: -30px; /* Adjust position for very small screens */
+                        right: -150px; /* Adjust position for very small screens */
+                        width: 60%; /* Adjust width for very small screens */
+                    }
+                }
+
+                h1:first-of-type {
+                    white-space: nowrap; /* Prevent wrapping for the first h1 */
+                    position: relative; /* Ensure text is above the foreground image */
+                    z-index: 1; /* Bring text in front of the image */
+                }
+
+                h1 {
+                    white-space: normal; /* Allow wrapping for all other h1 elements */
+                    position: relative; /* Ensure text is above the foreground image */
+                    z-index: 1; /* Bring text in front of the image */
+                }
+
+                p {
+                    white-space: normal; /* Allow wrapping for paragraph text */
+                    position: relative; /* Ensure text is above the foreground image */
+                    z-index: 1; /* Bring text in front of the image */
+                }
+                .button {
+                    margin-top: 5px; /* Add space above the button */
+                    z-index: 1; /* Ensure button is above other content */
+                }
+            </style>
+
 
         <style>
             .container {
