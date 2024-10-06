@@ -110,7 +110,7 @@
                             alert('echo $ ...\nLogin with your Discord account to use this command');
 
                             // Redirect to your OAuth URL
-                            window.location.href = 'https://discord.com/oauth2/authorize?client_id=1287607981856391259&response_type=code&redirect_uri=https%3A%2F%2Fb643de7c-65cc-4bc7-9a30-5972f8b6a9c2-00-142fkr0uur7o5.spock.replit.dev%2F&scope=identify';
+                            window.location.href = 'https://discord.com/oauth2/authorize?client_id=1287607981856391259&response_type=code&redirect_uri=https%3A%2F%2Fechofn.xyz%2F&scope=identify';
                         }
                     }
                 }
@@ -164,7 +164,7 @@
                     // Check if the 'code' query parameter exists
                     if (code) {
                         // Send the authorization code to your server to exchange for Discord ID and username
-                        axios.get(`https://7af1afd9-8b81-4c4c-87a6-c31d970dbebf-00-3tqylf728zyzg.riker.replit.dev/exchange-code/${code}`)
+                        axios.get(`https://api.echofn.xyz/exchange-code/${code}`)
                             .then(response => {
                                 const data = response.data;
                                 console.log('Data received:', data);
