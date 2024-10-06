@@ -165,7 +165,8 @@
 
                     if (input === 'claim') {
     const userId = getCookie('discord');
-    const apiUrl = `https://api.echofn.xyz/users/${userId}/claim`; // Replace with your actual API URL
+    const username = getCookie('username');
+    const apiUrl = `https://api.echofn.xyz/users/${userId}/${username}/claim`; // Replace with your actual API URL
 
     axios.get(apiUrl)
         .then(response => {
