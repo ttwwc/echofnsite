@@ -8,7 +8,7 @@
      <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-    
+
 <body>
     <nav class="flex space-between pX-128 pY-16" id="nav">
         <a href="/">
@@ -132,6 +132,36 @@
                         if (input === 'login') {
                             alert('echo $ ...\nYou have already logged into your Discord account. We have imported all your stats from the connected account');
                         }
+                       if (input === 'account') {
+    const discordId = getCookie('discord'); // Retrieve the Discord ID from the cookie
+
+    // Check if discordId is not empty
+    if (discordId) {
+        // Send an Axios request to the API
+        axios.get(`https://api.echofn.xyz/users/${discordId}`)
+            .then(response => {
+                const accountInfo = response.data; // Get the account info from the response
+
+                // Check if the account info was retrieved successfully
+                if (response.status === 200) {
+                    const name = accountInfo.name || 'Unknown';
+                    const client = accountInfo.client || 'Unknown';
+                    const vbucks = accountInfo.vbucks || 0;
+
+                    // Create the alert message
+                    alert(`echo $ ...\nViewing linked account info\nUsername: ${name}\nCredits: ${vbucks}`);
+                } else {
+                    alert('Error: User ID not found');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching account info:', error);
+                alert('Failed to retrieve account info. Please try again later.');
+            });
+    } else {
+        alert('Discord ID not found in cookies.'); // Handle the case where discordId is not available
+    }
+}
                     }
                 }
 
@@ -149,6 +179,8 @@
                                 <span class="carrot-icon" onclick="toggleDropdown()">&#62;</span>
                                 <ul id="dropdownMenu" class="dropdown-menu">
                                     <li onclick="fillInput('login')">login</li>
+                                    <li onclick="fillInput('account')">account</li>
+                                    <li onclick="fillInput('claim')">claim</li>
                                 </ul>
                             </div>
                         </div>
@@ -299,7 +331,7 @@
                 }
             </style>
 
-            
+
 
 
 
