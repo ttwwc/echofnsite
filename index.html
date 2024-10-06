@@ -170,11 +170,11 @@
     axios.get(apiUrl)
         .then(response => {
             // Display only the message from the API response in the alert
-            alert(response.data.message);
+            alert('echo $ ...\n' + response.data.message);
         })
         .catch(error => {
             console.error('Error claiming reward:', error);
-            alert('Failed to claim reward. Please try again later.'); // Display an error message
+            alert('echo $ ...\n' + response.data.message);
         });
 }
                     }
