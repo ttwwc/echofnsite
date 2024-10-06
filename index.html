@@ -8,7 +8,7 @@
      <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-
+    
 <body>
     <nav class="flex space-between pX-128 pY-16" id="nav">
         <a href="/">
@@ -26,6 +26,284 @@
 
         <div class="flex gap-32">
             <a href="/">Home</a>
+            <a href="javascript:void(0);" onclick="showPanel();" id="panel-btn">Panel</a> <!-- Panel button -->
+
+            <script>
+                function getCookie(name) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if (parts.length === 2) return parts.pop().split(';').shift();
+                }
+
+                function showPanel() {
+                    const discordId = getCookie('discord'); // Get Discord ID from cookie
+                    const username = getCookie('username');
+                    const contentSection = document.getElementById('content-section');
+                    const contentSection1 = document.getElementById('feature-content');
+
+                    if (discordId) {
+                        console.log('found cookie')
+                        console.log('Discord ID from cookie:', discordId);
+                        console.log('Discord username from cookie:', username);
+                        showPanel2(discordId, username); // Pass the ID to showPanel2
+                    } else {
+                        console.log('not found cookie')
+                        contentSection1.innerHTML = ``;
+                        contentSection.innerHTML = `
+                            <div class="flex col gap-32 center">
+                                <h2>GiftBot Panel</h2>
+                                <p>This is the command panel where you can input commands to use our services.</p>
+
+                                <div class="input-container">
+                                    <input type="text" id="carrotInput" class="carrot-input" placeholder="Type here..." onkeyup="checkCommand(event)">
+                                    <span class="carrot-icon" onclick="toggleDropdown()">&#62;</span>
+                                    <ul id="dropdownMenu" class="dropdown-menu">
+                                        <li onclick="fillInput('login')">login</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                function toggleDropdown() {
+                    const dropdownMenu = document.getElementById('dropdownMenu');
+                    const isActive = dropdownMenu.classList.contains('dropdown-active');
+
+                    // Close dropdown if it's already open
+                    if (isActive) {
+                        dropdownMenu.classList.remove('dropdown-active');
+                        dropdownMenu.classList.remove('dropdown-pop-in'); // Remove animation class when closing
+                    } else {
+                        // Open dropdown
+                        dropdownMenu.classList.add('dropdown-active');
+                        dropdownMenu.classList.add('dropdown-pop-in'); // Add animation class when opening
+                    }
+                }
+
+                function fillInput(text) {
+                    const inputField = document.getElementById('carrotInput');
+                    inputField.value = text;
+
+                    // Close dropdown after selecting an item
+                    toggleDropdown();
+
+                    // Trigger checkCommand to display the result
+                    checkCommand();
+                }
+
+                function checkCommand(event) {
+                    const input = document.getElementById('carrotInput').value.trim().toLowerCase();
+
+                    // Check for Enter key press
+                    if (event && event.key === 'Enter') {
+                        // Clear current command
+                        document.getElementById('carrotInput').value = '';
+
+                        // Close the dropdown
+                        const dropdownMenu = document.getElementById('dropdownMenu');
+                        dropdownMenu.classList.remove('dropdown-active');
+                        dropdownMenu.classList.remove('dropdown-pop-in'); // Remove animation class when closing
+
+                        if (input === 'login' || input === 'account' || input === 'claim') {
+                            // Show alert with the command output
+                            alert('echo $ ...\nLogin with your Discord account to use this command');
+
+                            // Redirect to your OAuth URL
+                            window.location.href = 'https://discord.com/oauth2/authorize?client_id=1287607981856391259&response_type=code&redirect_uri=https%3A%2F%2Fb643de7c-65cc-4bc7-9a30-5972f8b6a9c2-00-142fkr0uur7o5.spock.replit.dev%2F&scope=identify';
+                        }
+                    }
+                }
+            </script>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script>
+                function checkCommand2(event) {
+                    const input = document.getElementById('carrotInput').value.trim().toLowerCase();
+
+                    if (event && event.key === 'Enter') {
+                        document.getElementById('carrotInput').value = '';
+
+                        const dropdownMenu = document.getElementById('dropdownMenu');
+                        dropdownMenu.classList.remove('dropdown-active');
+                        dropdownMenu.classList.remove('dropdown-pop-in'); 
+
+                        if (input === 'login') {
+                            alert('echo $ ...\nYou have already logged into your Discord account. We have imported all your stats from the connected account');
+                        }
+                    }
+                }
+
+                function showPanel2(discordId, username) {
+                    const contentSection = document.getElementById('content-section');
+                    const contentSection1 = document.getElementById('feature-content');
+                    contentSection1.innerHTML = ``; 
+                    contentSection.innerHTML = `
+                        <div class="flex col gap-32 center">
+                            <h2>Welcome, ${username}!</h2> 
+                            <p>Logged into ID: <strong>${discordId}</strong></p>
+
+                            <div class="input-container">
+                                <input type="text" id="carrotInput" class="carrot-input" placeholder="Type here..." onkeyup="checkCommand2(event)">
+                                <span class="carrot-icon" onclick="toggleDropdown()">&#62;</span>
+                                <ul id="dropdownMenu" class="dropdown-menu">
+                                    <li onclick="fillInput('login')">login</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    console.log('Panel is now displayed with Discord ID:', discordId, 'and username:', username);
+                    document.cookie = `discord=${discordId}; path=/;`;
+                }
+
+                window.onload = function() {
+                    const params = new URLSearchParams(window.location.search);
+                    const code = params.get('code');
+
+                    // Check if the 'code' query parameter exists
+                    if (code) {
+                        // Send the authorization code to your server to exchange for Discord ID and username
+                        axios.get(`https://7af1afd9-8b81-4c4c-87a6-c31d970dbebf-00-3tqylf728zyzg.riker.replit.dev/exchange-code/${code}`)
+                            .then(response => {
+                                const data = response.data;
+                                console.log('Data received:', data);
+
+                                if (data.discord_id && data.username) {
+                                    document.cookie = `discord=${data.discord_id}; path=/;`;
+                                    document.cookie = `username=${data.username}; path=/;`;
+                                    showPanel2(data.discord_id, data.username);
+                                } else if (data.message && data.message === "Code already checked, ignoring.") {
+                                    // Redirect back to the original webpage if the code has already been checked
+                                    window.location.href = './';  // Adjust the path as necessary
+                                } else {
+                                    alert('Error: ' + data.error);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Failed to login with the provided auth... Please visit the panel and try again');
+                            });
+                    } else {
+                        // Do nothing if the 'code' query parameter is not present
+                        console.log('No code present in the URL, panel will not be displayed.');
+                    }
+                };
+            </script>
+
+
+
+
+
+
+
+
+
+
+            <style>
+                .input-container {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 400px;
+                    margin-top: 20px;
+                    border-radius: 50px; /* Rounded style */
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                    transition: all 0.3s ease;
+                }
+
+                .carrot-input {
+                    flex: 1;
+                    border: none; /* No border */
+                    padding: 14px 20px; /* Adjusted padding for a sleek look */
+                    padding-left: 60px; /* Spacing for the carrot icon */
+                    font-size: 16px;
+                    border-radius: 50px; /* Same rounded style as container */
+                    outline: none;
+                    box-shadow: none;
+                    transition: all 0.3s ease;
+                }
+
+                .carrot-input:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+
+                .carrot-icon {
+                    position: absolute;
+                    left: 20px; /* Place carrot icon inside the input container */
+                    font-size: 24px;
+                    color: #b96cff;
+                    cursor: pointer;
+                    transition: color 0.3s ease;
+                    user-select: none; /* Prevent text selection */
+                }
+
+                .carrot-icon:hover {
+                    color: #8c53cc; /* Darker color on hover */
+                }
+
+                .dropdown-menu {
+                    display: none; /* Initially hidden */
+                    position: absolute;
+                    top: 110%;
+                    left: 50px; /* Keep the menu close to the carrot */
+                    width: auto; /* Adjust width to fit content */
+                    min-width: 50px; /* Ensure it's not too wide */
+                    max-width: 100px; /* Limit the width to avoid stretching too far */
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                    list-style: none;
+                    border-radius: 50px; /* Rounded style */
+                    padding: 5px 10px; /* Padding inside the dropdown */
+                    margin: 0;
+                    background: #141414; /* Match the input field's background */
+                    z-index: 10;
+                    opacity: 0;
+                    transform: translateY(-10px) scale(0.95); /* Slightly smaller and moved up */
+                    transition: opacity 0.2s ease-out, transform 0.3s ease-out;
+                }
+
+                .dropdown-menu.dropdown-active {
+                    display: block;
+                    opacity: 1;
+                    border-radius: 50px; /* Rounded style */
+                    transform: translateY(0) scale(1); /* Move down smoothly and expand */
+                }
+
+                .dropdown-menu.dropdown-pop-in {
+                    animation: pop-in 0.2s forwards; /* Apply pop-in animation */
+                }
+
+                @keyframes pop-in {
+                    0% {
+                        opacity: 0;
+                        transform: scale(0.8);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+
+                .dropdown-menu li {
+                    padding: 8px;
+                    border-radius: 50px; /* Rounded style */
+                    cursor: pointer;
+                    font-size: 14px; /* Make the text smaller to match your example */
+                    transition: background-color 0.3s ease;
+                }
+
+                .dropdown-menu li:hover {
+                    background-color: #323333;
+                }
+            </style>
+
+            
+
+
+
+
             <a href="https://discord.com/invite/echofn">Discord</a>
         </div>
 
@@ -38,7 +316,7 @@
         </a>
     </nav>
 
-            <section class="landing">
+            <section class="landing" id="content-section">
                 <div class="flex col gap-32">
                     <div class="flex col gap-16 center">
                         <div class="background">
@@ -86,7 +364,7 @@
                         scrollbar-color: transparent transparent; /* Transparent scrollbar */
                     }
                 }
-                
+
                 .background {
                     position: relative; /* Make the div a positioning context */
                     color: white; /* Text color */
@@ -130,17 +408,36 @@
                     z-index: 1; /* Bring text in front of the image */
                 }
 
+                /* Allow wrapping for all other h1 elements */
                 h1 {
                     white-space: normal; /* Allow wrapping for all other h1 elements */
                     position: relative; /* Ensure text is above the foreground image */
                     z-index: 1; /* Bring text in front of the image */
                 }
 
+                /* Allow wrapping for paragraph text */
                 p {
                     white-space: normal; /* Allow wrapping for paragraph text */
                     position: relative; /* Ensure text is above the foreground image */
                     z-index: 1; /* Bring text in front of the image */
                 }
+
+                /* Media query for medium and smaller screens */
+                @media (max-width: 768px) {
+                    h1:first-of-type {
+                        white-space: normal; /* Allow wrapping for the first h1 on smaller screens */
+                    }
+
+                    .foreground-image {
+                        display: none; /* Hide the image on smaller screens */
+                    }
+
+                    /* Hide the button on smaller screens */
+                    .button {
+                        display: none; /* Remove the button on smaller screens */
+                    }
+                }
+
                 .button {
                     margin-top: 5px; /* Add space above the button */
                     z-index: 1; /* Ensure button is above other content */
@@ -178,16 +475,16 @@
 
     </section>
 
-		<hr class="separator">
-	<style>
-		.separator {
-				border: none;          /* Remove default border */
-				height: 1px;          /* Set height of the line */
-				background-color: #242424; /* Set the color of the line */
-				margin: 16px 0;       /* Add margin above and below the line */
-		}
-	</style>
-    <section class="features center" style="margin-top: 40px;"> <!-- Add margin-top for separation -->
+    <hr class="separator">
+  <style>
+    .separator {
+        border: none;          /* Remove default border */
+        height: 1px;          /* Set height of the line */
+        background-color: #242424; /* Set the color of the line */
+        margin: 16px 0;       /* Add margin above and below the line */
+    }
+  </style>
+    <section class="features center" style="margin-top: 40px;" id="feature-content"> <!-- Add margin-top for separation -->
         <div class="flex col gap-16 center">
             <h2>Game cosmetics for low prices</h2>
             <p>With an easy-to-use interface, you and your friends can quickly access and claim skins, V-Bucks, and exclusive items, all while enjoying significant savings</p>
@@ -239,6 +536,7 @@
             </div>
         </div>
     </section>
+
     <footer>
         <div class="flex col gap-16 center">
             <p>© 2024 Echo. All rights reserved.</p>
