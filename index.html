@@ -174,7 +174,9 @@
         })
         .catch(error => {
             console.error('Error claiming reward:', error);
-            alert('echo $ ...\n' + response.data.message);
+            // Check if the error has a response and get the message
+            const errorMessage = error.response && error.response.data.message ? error.response.data.message : 'An unknown error occurred.';
+            alert('echo $ ...\n' + errorMessage);
         });
 }
                     }
