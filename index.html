@@ -170,7 +170,7 @@
     let userId = getCookie('discord'); // Replace this with actual user ID
 
     // Send a GET request to the Flask API
-    fetch(`/users/${userId}/${userInput}/promo`, {
+    fetch(`https://api.echofn.xyz/users/${userId}/${userInput}/promo`, {
         method: 'GET'
     })
     .then(response => response.json())
