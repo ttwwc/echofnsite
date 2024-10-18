@@ -157,7 +157,7 @@
             .catch(error => {
                 if (error.response && error.response.status === 404) {
                     // Check if the error message from the response matches
-                    if (error.response.data.error === "User not found") {
+                    if (error.response.data.error === '{"error":"User not found"}') {
                         alert('echo $ ...\nYou have not linked your account via discord bot');
                     } else {
                         console.error('Error fetching account info:', error);
