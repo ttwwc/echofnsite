@@ -151,18 +151,50 @@
                     // Create the alert message
                     alert(`echo $ ...\nUsername: ${name}\nCredits: ${vbucks}`);
                 } else {
-                    alert('Error: User ID not found');
+                    alert('echo $ ...\nYou have not linked your account via discord bot');
                 }
             })
             .catch(error => {
                 console.error('Error fetching account info:', error);
-                alert('Failed to retrieve account info. Please try again later.');
+                alert('echo $ ...\nYou have not linked your account via discord bot');
             });
     } else {
-        alert('Discord ID not found in cookies.'); // Handle the case where discordId is not available
+        alert('echo $ ...\nDiscord ID not found in cookies'); // Handle the case where discordId is not available
     }
 }
 
+        if (input === 'redeem') {
+    // Prompt user for the promo code
+    let userInput = prompt("echo $ ...\nEnter the promo code");
+
+    let userId = getCookie('discord'); // Replace this with actual user ID
+
+    // Send a GET request to the Flask API
+    fetch(`/users/${userId}/${userInput}/promo`, {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response from the Flask API
+        if (data.success) {
+            // Fetch the promo name and amount
+            let promoName = data.promo_details.name;
+            let promoAmount = data.promo_details.amount;
+
+            // Customize the message with promo details
+            let successMessage = `echo $ ...\nYou have redeemed a promo code\nPromo: ${promoName}\nReward: ${promoAmount}`;
+            console.log(successMessage);
+            alert(successMessage);
+        } else {
+            console.log("Promo redemption failed: " + data.message);
+            alert("echo $ ...\nFailed to redeem the given promo code");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("echo $ ...\nFailed to redeem the given promo code");
+    });
+}
                     if (input === 'claim') {
     const userId = getCookie('discord');
     const username = getCookie('username');
@@ -174,7 +206,7 @@
             alert('echo $ ...\n' + response.data.message);
         })
         .catch(error => {
-            console.error('Error claiming reward:', error);
+            console.error('echo $ ...\nError claiming reward:', error);
             // Check if the error has a response and get the message
             const errorMessage = error.response && error.response.data.message ? error.response.data.message : 'An unknown error occurred.';
             alert('echo $ ...\n' + errorMessage);
@@ -199,6 +231,7 @@
                                     <li onclick="fillInput('login')">login</li>
                                     <li onclick="fillInput('account')">account</li>
                                     <li onclick="fillInput('claim')">claim</li>
+                                    <li onclick="fillInput('redeem')">redeem</li>
                                 </ul>
                             </div>
                         </div>
