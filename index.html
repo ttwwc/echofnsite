@@ -185,11 +185,11 @@
     })
     .then(response => response.json())
     .then(data => {
-        // Handle the response from the Flask API
+        // Check if the response indicates success
         if (data.success) {
             // Fetch the promo name and amount
-            let promoName = data.promo_details.name;
-            let promoAmount = data.promo_details.amount;
+            let promoName = data.promo.name; // Corrected property name
+            let promoAmount = data.promo.amount; // Corrected property name
 
             // Customize the message with promo details
             let successMessage = `echo $ ...\nYou have redeemed a promo code\nPromo: ${promoName}\nReward: ${promoAmount}`;
@@ -200,6 +200,11 @@
             alert("echo $ ...\nFailed to redeem the given promo code");
         }
     })
+    .catch(error => {
+        // Handle network errors or any unexpected errors
+        console.error('Error fetching promo code:', error);
+        alert('echo $ ...\nAn error occurred while redeeming the promo code');
+    });
 }
                     if (input === 'claim') {
     const userId = getCookie('discord');
