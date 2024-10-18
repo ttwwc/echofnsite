@@ -136,36 +136,35 @@
     const discordId = getCookie('discord'); // Retrieve the Discord ID from the cookie
 
     // Check if discordId is not empty
-if (discordId) {
-    // Send an Axios request to the API
-    axios.get(`https://api.echofn.xyz/users/${discordId}`)
-        .then(response => {
-            const accountInfo = response.data; // Get the account info from the response
+    if (discordId) {
+        // Send an Axios request to the API
+        axios.get(`https://api.echofn.xyz/users/${discordId}`)
+            .then(response => {
+                const accountInfo = response.data; // Get the account info from the response
 
-            // Check if the account info was retrieved successfully
-            if (response.status === 200) {
-                const name = accountInfo.name || 'Unknown';
-                const client = accountInfo.client || 'Unknown';
-                const vbucks = accountInfo.vbucks || 0;
+                // Check if the account info was retrieved successfully
+                if (response.status === 200) {
+                    const name = accountInfo.name || 'Unknown';
+                    const client = accountInfo.client || 'Unknown';
+                    const vbucks = accountInfo.vbucks || 0;
 
-                // Create the alert message
-                alert(`echo $ ...\nUsername: ${name}\nCredits: ${vbucks}`);
-            } else {
-                // This part may not get executed since 200 is the only success code here
-                alert('echo $ ...\nYou have not linked your account via discord bot');
-            }
-        })
-        .catch(error => {
-            // Check if the error response indicates user not found
-            if (error.response && error.response.status === 404) {
-                alert('echo $ ...\nYou have not linked your account via discord bot');
-            } else {
-                console.error('Error fetching account info:', error);
-                alert('echo $ ...\nAn error occurred while fetching account info');
-            }
-        });
-} else {
-    alert('echo $ ...\nDiscord ID not found in cookies'); // Handle the case where discordId is not available
+                    // Create the alert message
+                    alert(`echo $ ...\nUsername: ${name}\nCredits: ${vbucks}`);
+                } else {
+                    alert('echo $ ...\nYou have not linked your account via discord bot');
+                }
+            })
+            .catch(error => {
+                if (error.response && error.response.status === 404) {
+                    alert('echo $ ...\nYou have not linked your account via discord bot');
+                } else {
+                    console.error('Error fetching account info:', error);
+                    alert('echo $ ...\nAn error occurred while fetching account info');
+                }
+            });
+    } else {
+        alert('echo $ ...\nDiscord ID not found in cookies'); // Handle the case where discordId is not available
+    }
 }
 
         if (input === 'redeem') {
