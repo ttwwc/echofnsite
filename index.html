@@ -161,15 +161,15 @@
                         alert('echo $ ...\nYou have not linked your account via discord bot');
                     } else {
                         console.error('Error fetching account info:', error);
-                        alert('echo $ ...\nAn error occurred while fetching account info');
+                        alert('echo $ ...\nYou have not linked your account via discord bot');
                     }
                 } else {
                     console.error('Error fetching account info:', error);
-                    alert('echo $ ...\nAn error occurred while fetching account info');
+                    alert('echo $ ...\nYou have not linked your account via discord bot');
                 }
             });
     } else {
-        alert('echo $ ...\nDiscord ID not found in cookies'); // Handle the case where discordId is not available
+        alert('echo $ ...\nPlease refresh the panel'); // Handle the case where discordId is not available
     }
 }
 
@@ -195,15 +195,20 @@
             let successMessage = `echo $ ...\nYou have redeemed a promo code\nPromo: ${promoName}\nReward: ${promoAmount}`;
             console.log(successMessage);
             alert(successMessage);
-        } else {
-            console.log("Promo redemption failed: " + data.message);
+        } else if (data.error === "Promo code not found") {
+            // Specific case for 'Promo code not found'
+            console.log("echo $ ...\nFailed to redeem the given promo code");
             alert("echo $ ...\nFailed to redeem the given promo code");
+        } else {
+            // Handle any other error
+            console.log("echo $ ...\nYou have not linked your account via discord bot");
+            alert("echo $ ...\nYou have not linked your account via discord bot");
         }
     })
     .catch(error => {
         // Handle network errors or any unexpected errors
         console.error('Error fetching promo code:', error);
-        alert('echo $ ...\nAn error occurred while redeeming the promo code');
+        alert('echo $ ...\nYou have not linked your account via discord bot');
     });
 }
                     if (input === 'claim') {
