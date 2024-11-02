@@ -212,7 +212,34 @@
     });
 }
 
-                    //here
+                        if (input === 'cosmetic') {
+                            let userInput = prompt("echo $ ...\nEnter the cosmetic item name");
+                            // Construct the URL for the API request
+                                const apiUrl = `https://api.echofn.xyz/offers/search/${encodeURIComponent(userInput)}`;
+
+                                // Make the API request
+                                fetch(apiUrl)
+                                    .then(response => {
+                                        // Check if the response is ok (status in the range 200-299)
+                                        if (!response.ok) {
+                                            throw new Error('Network response was not ok');
+                                        }
+                                        return response.json(); // Parse the response as JSON
+                                    })
+                                    .then(data => {
+                                        // Assuming the API returns the offer link directly as a string
+                                        // If the API response structure differs, adjust accordingly
+                                        const offerLink = data.api_link; // Adjust this line based on actual API response structure
+
+                                        // Open the extracted link in a new tab
+                                        window.open(offerLink, '_blank');
+                                    })
+                                    .catch(error => {
+                                        console.error('echo $ ...\nThere was a problem with the fetch operation:', error);
+                                        alert("echo $ ...\nFailed to retrieve the offer link. Please try again");
+                                    });
+                            }
+                        }
                     if (input === 'claim') {
     const userId = getCookie('discord');
     const username = getCookie('username');
