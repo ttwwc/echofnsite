@@ -6,7 +6,7 @@
 	--background-default: #0C0C0C;
 	--background-default-gradient: linear-gradient(180deg, #0C0C0C 0%, rgba(12, 12, 12, 0.32) 100%);
 
-		
+
 	--background-higher: #141413;
 	--background-higher-gradient: linear-gradient(172.68deg, #212121 5.69%, #121212 94.31%);
 
@@ -19,7 +19,7 @@
 
 	--accent-primary: #b96cff;
 	--accent-primary-gradient: linear-gradient(180deg, #b96cff 0%, rgba(163,203,253,255) 100%);
-	
+
 	--accent-secondary: #b96cff;
 	--accent-secondary-gradient: linear-gradient(180deg, #b96cff 0%, rgb(163,203,253,255) 100%);
 
@@ -27,18 +27,18 @@
 }
 
 @font-face {
-  font-family: Switzer;
-  src: url(fonts/Switzer-Regular.ttf);
+	font-family: Switzer;
+	src: url(Switzer-Regular.ttf);
 }
 
 @font-face {
-  font-family: Switzer Bold;
-  src: url(fonts/Switzer-Bold.ttf);
+	font-family: Switzer Bold;
+	src: url(Switzer-Bold.ttf);
 }
 
 @font-face {
-  font-family: Switzer Semi Bold;
-  src: url(fonts/Switzer-Semibold.ttf);
+	font-family: Switzer Semi Bold;
+	src: url(Switzer-Semibold.ttf);
 }
 
 * {
@@ -51,43 +51,49 @@
 }
 
 html, body {
-  height: 100%;
-  width: 100%;
+	height: 100%;
+	width: 100%;
 	color: var(--foreground-default);
 	font-family: Switzer;
 	background: var(--background-root);
 	font-size: 18px;
 	overflow-x: hidden;
-	scroll-behavior: smooth;	
+	scroll-behavior: smooth;
+	caret-color: transparent;
 }
 
 h1 {
 	font-family: Switzer Bold;
 	font-size: 64px;
 	font-weight: 700;
+	caret-color: transparent;
 }
 
 h2 {
 	font-family: Switzer Bold;
 	font-size: 48px;
 	font-weight: 700;
+	caret-color: transparent;
 }
 
 h3 {
 	font-family: Switzer Bold;
 	font-size: 32px;
 	font-weight: 700;
+	caret-color: transparent;
 }
 
 h4 {
 	font-family: Switzer Bold;
 	font-size: 24px;
 	font-weight: 700;
+	caret-color: transparent;
 }
 
 p {
 	line-height: 150%;
 	color: var(--foreground-dimmer);
+	caret-color: transparent;
 }
 
 a {
@@ -161,6 +167,7 @@ input, textarea {
 	font-family: Switzer;
 	padding: 10px 16px;
 	width: -webkit-fill-available;
+	caret-color: transparent;
 }
 
 textarea {
@@ -838,8 +845,8 @@ footer .flex.gap-32 ion-icon {
 	.contact .flex.row.gap-128 {
 		flex-direction: column;
 		gap: 64px;
-    align-items: center;
-    width: 100%;
+		align-items: center;
+		width: 100%;
 	}
 
 	.contact .flex.row.gap-128 .flex.col.gap-32 {
@@ -865,7 +872,7 @@ footer .flex.gap-32 ion-icon {
 	nav .flex.gap-32 {
 		display: none;
 	}
-	
+
 	.open {
 		align-items: flex-start;
 /* 		height: 100%;	 */
@@ -878,16 +885,16 @@ footer .flex.gap-32 ion-icon {
 
 	.open .flex.gap-32 {
 		display: flex;
-    flex-direction: column;
-    position: absolute;
-    background: var(--background-root);
-    top: 78px;
+		flex-direction: column;
+		position: absolute;
+		background: var(--background-root);
+		top: 78px;
 /*     padding: 32px 64px; */
-    left: 0;
-    width: 100%;
-    height: 100vh;
+		left: 0;
+		width: 100%;
+		height: 100vh;
 		justify-content: start;
-    align-items: start;
+		align-items: start;
 		gap: 0;
 	}
 
@@ -900,17 +907,17 @@ footer .flex.gap-32 ion-icon {
 
 	.open .buttons {
 		position: absolute;
-    top: 332px;
-    left: 0;
-    width: calc(100% - 128px);
-    flex-direction: column;
-    padding: 0 64px;
-    align-items: flex-start;
+		top: 332px;
+		left: 0;
+		width: calc(100% - 128px);
+		flex-direction: column;
+		padding: 0 64px;
+		align-items: flex-start;
 	}
 
 	.open .buttons > a {
 		width: -webkit-fill-available;
-    text-align: center;
+		text-align: center;
 		padding: 16px 32px;
 		border-radius: 16px;
 	}
@@ -940,15 +947,15 @@ footer .flex.gap-32 ion-icon {
 	h1 {
 		font-size: 56px;
 	}
-	
+
 	h2 {
 		font-size: 40px;
 	}
-	
+
 	h3 {
 		font-size: 28px;
 	}
-	
+
 	h4 {
 		font-size: 20px;
 	}
@@ -984,7 +991,7 @@ footer .flex.gap-32 ion-icon {
 
 	nav {
 		padding: 16px 32px !important;
-    width: calc(100% - 64px);
+		width: calc(100% - 64px);
 	}
 
 	.companies .flex.left.wrap {
@@ -1013,7 +1020,7 @@ footer .flex.gap-32 ion-icon {
 
 	.open .flex.gap-32 a {
 		width: calc(100% - 64px);
-    padding: 16px 32px;
+		padding: 16px 32px;
 	}
 
 	.open .buttons {
@@ -1022,10 +1029,10 @@ footer .flex.gap-32 ion-icon {
 		display: flex;
 	}
 
-  a.hamburger ion-icon {
-	  width: 28px;
-	  height: 28px;
-  }
+	a.hamburger ion-icon {
+		width: 28px;
+		height: 28px;
+	}
 
 	.contact .flex.col.gap-16, .contact .flex.col.gap-16 .flex.row.gap-16 {
 		width: 100%;
@@ -1048,7 +1055,7 @@ footer .flex.gap-32 ion-icon {
 }
 
 ::-webkit-scrollbar {
-  width: 13px;
+	width: 13px;
 }
 
 ::-webkit-scrollbar-track {
