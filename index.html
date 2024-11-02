@@ -7,12 +7,6 @@
     <title>Echo — Home</title>
      <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <style>
-        /* Hide the caret in input fields and text areas */
-        input, textarea {
-            caret-color: transparent; /* Hides the blinking cursor */
-        }
-    </style>
 </head>
 
 <body>
@@ -111,7 +105,7 @@
                         dropdownMenu.classList.remove('dropdown-active');
                         dropdownMenu.classList.remove('dropdown-pop-in'); // Remove animation class when closing
 
-                        if (input === 'login' || input === 'account' || input === 'claim' || input == 'redeem' || input == 'cosmetic' || input == 'gift') {
+                        if (input === 'login' || input === 'account' || input === 'claim' || input == 'redeem' || input == 'gift') {
                             // Show alert with the command output
                             alert('echo $ ...\nLogin with your Discord account to use this command');
 
@@ -218,40 +212,30 @@
     });
 }
 
-if (input === 'cosmetic') {
-    let userInput = prompt("echo $ ...\nEnter the cosmetic item name");
+if (input === 'gift') {
+    let userInput = prompt("echo $ ...\nEnter the cosmetic offer ID");
+    const userId = getCookie('discord');
     
-    // Construct the URL for the API request
-    const apiUrl = `https://api.echofn.xyz/offers/search/${encodeURIComponent(userInput)}`;
+    // Define the API endpoint with the userInput at the end
+    let apiUrl = `https://api.echofn.xyz/offers/gift/${userId}/${userInput}`;
 
-    // Make the API request
+    // Make the GET request
     fetch(apiUrl)
-        .then(response => {
-            // Check if the response is ok (status in the range 200-299)
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+        .then(response => response.json())
+        .then(data => {
+            // Check the response message
+            if (data.message === "Your account is not linked. Link your account using the appropriate command.") {
+                alert("echo $ ...\nYou have not linked your account via discord bot");
+            } if (data.message === "Gift sent successfully")  {
+                alert(`echo $ ...\nSent gift ${userInput} to ${userId}`);
             }
-            return response.text(); // Parse the response as plain text
-        })
-        .then(link => {
-            // Assuming the API returns the link directly as plain text
-            // Open the extracted link in a new tab
-            function copyToClipboard(text) {
-                // Create a temporary textarea element to hold the text
-                const textarea = document.createElement('textarea');
-                textarea.value = text; // Set the value of the textarea to the text we want to copy
-                document.body.appendChild(textarea); // Append the textarea to the body
-                textarea.select(); // Select the text in the textarea
-                document.execCommand('copy'); // Execute the copy command
-                document.body.removeChild(textarea); // Remove the textarea from the document
+            if (data.message === "Invalid cosmetic item provided. Make sure you're inputting the offer ID.")  {
+                alert(`echo $ ...\nInvalid offer ID provided...${userInput} is not an eligable offer`);
             }
-            alert(`echo $ ...\nFound an offer ID link for '${userInput}'\nI've attempted to open it in a new tab aswell as copied the link to your clipboard`);
-            copyToClipboard(link);
-            window.open(link, '_blank');
         })
         .catch(error => {
-            console.error('echo $ ...\nThere was a problem with the fetch operation:', error);
-            alert("echo $ ...\nFailed to retrieve the offer link. Please try again");
+            console.error("An error occurred:", error);
+            alert("echo $ ...\nAn error occurred while making the request. Please try again");
         });
 }
 
@@ -292,9 +276,8 @@ if (input === 'claim') {
                                     <li onclick="fillInput('login')">login</li>
                                     <li onclick="fillInput('account')">account</li>
                                     <li onclick="fillInput('claim')">claim</li>
-                                    <li onclick="fillInput('redeem')">redeem</li>
-                                    <li onclick="fillInput('cosmetic')">cosmetic</li>
                                     <li onclick="fillInput('gift')">gift</li>
+                                    <li onclick="fillInput('redeem')">redeem</li>
                                 </ul>
                             </div>
                         </div>
@@ -466,7 +449,7 @@ if (input === 'claim') {
                 <div class="flex col gap-32">
                     <div class="flex col gap-16 center">
                         <div class="background">
-                            <h1>Earn rewards at Echo</h1>
+                            <h1 type="hidden">Earn rewards at Echo</h1>
                             <p>Introducing our Fortnite giftbot, crafted to enhance your gaming experience without breaking the bank.</p>
                             <img src="https://www.pngplay.com/wp-content/uploads/12/Fornite-Galaxy-Skin-Fortnite-PNG-Clipart-Background.png" alt="Background Image" class="foreground-image"> 
                             </div>
@@ -552,6 +535,7 @@ if (input === 'claim') {
                     white-space: nowrap; /* Prevent wrapping for the first h1 */
                     position: relative; /* Ensure text is above the foreground image */
                     z-index: 1; /* Bring text in front of the image */
+                    caret-color: transparent;
                 }
 
                 /* Allow wrapping for all other h1 elements */
@@ -559,6 +543,7 @@ if (input === 'claim') {
                     white-space: normal; /* Allow wrapping for all other h1 elements */
                     position: relative; /* Ensure text is above the foreground image */
                     z-index: 1; /* Bring text in front of the image */
+                    caret-color: transparent;
                 }
 
                 /* Allow wrapping for paragraph text */
@@ -566,12 +551,14 @@ if (input === 'claim') {
                     white-space: normal; /* Allow wrapping for paragraph text */
                     position: relative; /* Ensure text is above the foreground image */
                     z-index: 1; /* Bring text in front of the image */
+                    caret-color: transparent;
                 }
 
                 /* Media query for medium and smaller screens */
                 @media (max-width: 768px) {
                     h1:first-of-type {
                         white-space: normal; /* Allow wrapping for the first h1 on smaller screens */
+                        caret-color: transparent;
                     }
 
                     .foreground-image {
