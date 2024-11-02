@@ -232,6 +232,12 @@ if (input === 'gift') {
             if (data.message === "Invalid cosmetic item provided. Make sure you're inputting the offer ID.")  {
                 alert(`echo $ ...\nInvalid offer ID provided...${userInput} is not an eligable offer`);
             }
+            if (data.message === "You don't have enough credits for this cosmetic")  {
+                alert(`echo $ ...\nYou don't have enough credits for this cosmetic (${userInput})`);
+            }
+            if (data.message === "Failed to send cosmetic gift")  {
+                alert(`echo $ ...\nFailed to send cosmetic gift ${userInput} to ${userId}`);
+            }
         })
         .catch(error => {
             console.error("An error occurred:", error);
