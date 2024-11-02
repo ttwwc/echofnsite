@@ -102,7 +102,6 @@ a {
 	transition: color 0.1s ease-out;
 	line-height: 150%;
 	font-size: 16px;
-	caret-color: transparent;
 }
 
 a:hover {
@@ -176,7 +175,6 @@ textarea {
 	min-height: 128px;
 	max-height: 256px;
 	resize: vertical;
-	caret-color: transparent;
 }
 
 input:hover, textarea:hover {
@@ -224,7 +222,6 @@ section.center div.flex.col.gap-16.center{
 
 .col {
 	flex-direction: column;
-	caret-color: transparent;
 }
 
 .wrap {
