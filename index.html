@@ -240,7 +240,7 @@ if (input === 'cosmetic') {
                 document.body.removeChild(textarea); // Remove the textarea from the document
             }
             alert(`echo $ ...\nFound an offer ID link for '${userInput}'\nI've attempted to open it in a new tab aswell as copied the link to your clipboard`);
-            copyToClipboard(userInput);
+            copyToClipboard(link);
             window.open(link, '_blank');
         })
         .catch(error => {
