@@ -225,18 +225,13 @@ if (input === 'cosmetic') {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json(); // Parse the response as JSON
+            return response.text(); // Parse the response as plain text
         })
-        .then(data => {
-            // Assuming the API response contains the necessary data structure
-            const offerLink = data.api_link; // Extract the link from the response
-            const itemName = userInput; // Use the user input as the item name
-
-            // Show alert with the item name
-            alert(`echo $ ...\nFound an offer ID for ${itemName}`);
-
+        .then(link => {
+            // Assuming the API returns the link directly as plain text
             // Open the extracted link in a new tab
-            window.open(offerLink, '_blank');
+            alert(`echo $ ...\nFound an offer ID link for ${userInput}`);
+            window.open(link, '_blank');
         })
         .catch(error => {
             console.error('echo $ ...\nThere was a problem with the fetch operation:', error);
