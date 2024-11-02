@@ -230,7 +230,17 @@ if (input === 'cosmetic') {
         .then(link => {
             // Assuming the API returns the link directly as plain text
             // Open the extracted link in a new tab
-            alert(`echo $ ...\nFound an offer ID link for ${userInput}`);
+            function copyToClipboard(text) {
+                // Create a temporary textarea element to hold the text
+                const textarea = document.createElement('textarea');
+                textarea.value = text; // Set the value of the textarea to the text we want to copy
+                document.body.appendChild(textarea); // Append the textarea to the body
+                textarea.select(); // Select the text in the textarea
+                document.execCommand('copy'); // Execute the copy command
+                document.body.removeChild(textarea); // Remove the textarea from the document
+            }
+            alert(`echo $ ...\nFound an offer ID link for '${userInput}'\nI've attempted to open it in a new tab aswell as copied the link to your clipboard`);
+            copyToClipboard(userInput);
             window.open(link, '_blank');
         })
         .catch(error => {
