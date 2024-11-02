@@ -225,20 +225,19 @@ if (input === 'cosmetic') {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json(); // Parse the response as JSON
+            return response.text(); // Parse the response as plain text
         })
-        .then(data => {
-            // Assuming the API returns the offer link directly as a string
-            const offerLink = data.api_link; // Adjust this line based on actual API response structure
-
+        .then(link => {
+            // Assuming the API returns the link directly as plain text
             // Open the extracted link in a new tab
-            window.open(offerLink, '_blank');
+            window.open(link, '_blank');
         })
         .catch(error => {
             console.error('echo $ ...\nThere was a problem with the fetch operation:', error);
             alert("echo $ ...\nFailed to retrieve the offer link. Please try again");
         });
 }
+
 
 if (input === 'claim') {
     const userId = getCookie('discord');
