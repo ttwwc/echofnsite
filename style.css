@@ -224,6 +224,7 @@ section.center div.flex.col.gap-16.center{
 
 .col {
 	flex-direction: column;
+	caret-color: transparent;
 }
 
 .wrap {
