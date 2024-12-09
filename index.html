@@ -26,7 +26,7 @@
 
         <div class="flex gap-32">
             <a href="/">Home</a>
-            <a href="javascript:void(0);" onclick="showPanel();" id="panel-btn">Panel</a> <!-- Panel button -->
+            <a href="javascript:void(0);" onclick="showPanel();" id="panel-btn">Panel</a> <!-- panel -->
 
             <script>
                 function getCookie(name) {
@@ -36,7 +36,7 @@
                 }
 
                 function showPanel() {
-                    const discordId = getCookie('discord'); // Get Discord ID from cookie
+                    const discordId = getCookie('discord'); // get the discord id from cookies
                     const username = getCookie('username');
                     const contentSection = document.getElementById('content-section');
                     const contentSection1 = document.getElementById('feature-content');
@@ -45,7 +45,7 @@
                         console.log('found cookie')
                         console.log('Discord ID from cookie:', discordId);
                         console.log('Discord username from cookie:', username);
-                        showPanel2(discordId, username); // Pass the ID to showPanel2
+                        showPanel2(discordId, username); // pass id
                     } else {
                         console.log('not found cookie')
                         contentSection1.innerHTML = ``;
@@ -70,46 +70,33 @@
                     const dropdownMenu = document.getElementById('dropdownMenu');
                     const isActive = dropdownMenu.classList.contains('dropdown-active');
 
-                    // Close dropdown if it's already open
+                    // close dropdown for cmd
                     if (isActive) {
                         dropdownMenu.classList.remove('dropdown-active');
-                        dropdownMenu.classList.remove('dropdown-pop-in'); // Remove animation class when closing
+                        dropdownMenu.classList.remove('dropdown-pop-in'); // no anim.
                     } else {
-                        // Open dropdown
                         dropdownMenu.classList.add('dropdown-active');
-                        dropdownMenu.classList.add('dropdown-pop-in'); // Add animation class when opening
+                        dropdownMenu.classList.add('dropdown-pop-in');
                     }
                 }
 
                 function fillInput(text) {
                     const inputField = document.getElementById('carrotInput');
                     inputField.value = text;
-
-                    // Close dropdown after selecting an item
                     toggleDropdown();
-
-                    // Trigger checkCommand to display the result
                     checkCommand();
                 }
 
                 function checkCommand(event) {
                     const input = document.getElementById('carrotInput').value.trim().toLowerCase();
-
-                    // Check for Enter key press
                     if (event && event.key === 'Enter') {
-                        // Clear current command
                         document.getElementById('carrotInput').value = '';
-
-                        // Close the dropdown
                         const dropdownMenu = document.getElementById('dropdownMenu');
                         dropdownMenu.classList.remove('dropdown-active');
-                        dropdownMenu.classList.remove('dropdown-pop-in'); // Remove animation class when closing
+                        dropdownMenu.classList.remove('dropdown-pop-in')
 
                         if (input === 'login' || input === 'account' || input === 'claim' || input == 'redeem' || input == 'gift') {
-                            // Show alert with the command output
                             alert('echo $ ...\nLogin with your Discord account to use this command');
-
-                            // Redirect to your OAuth URL
                             window.location.href = 'https://discord.com/oauth2/authorize?client_id=1287607981856391259&response_type=code&redirect_uri=https%3A%2F%2Fechofn.xyz%2F&scope=identify';
                         }
                     }
@@ -133,22 +120,19 @@
                             alert('echo $ ...\nYou have already logged into your Discord account. We have imported all your stats from the connected account');
                         }
                        if (input === 'account') {
-    const discordId = getCookie('discord'); // Retrieve the Discord ID from the cookie
+    const discordId = getCookie('discord'); // get discord id from cookies
 
-    // Check if discordId is not empty
     if (discordId) {
-        // Send an Axios request to the API
+        // find user linked info from their discord id -->
         axios.get(`https://api.echofn.xyz/users/${discordId}`)
             .then(response => {
-                const accountInfo = response.data; // Get the account info from the response
-
-                // Check if the account info was retrieved successfully
+                const accountInfo = response.data; // get info from response endpoint
                 if (response.status === 200) {
                     const name = accountInfo.name || 'Unknown';
                     const client = accountInfo.client || 'Unknown';
                     const vbucks = accountInfo.vbucks || 0;
 
-                    // Create the alert message
+                    // alert reply
                     alert(`echo $ ...\nUsername: ${name}\nCredits: ${vbucks}`);
                 } else {
                     alert('echo $ ...\nYou have not linked your account via discord bot');
@@ -156,7 +140,6 @@
             })
             .catch(error => {
                 if (error.response && error.response.status === 404) {
-                    // Check if the error message from the response matches
                     if (error.response.data.error === '{"error":"User not found"}') {
                         alert('echo $ ...\nYou have not linked your account via discord bot');
                     } else {
@@ -169,44 +152,35 @@
                 }
             });
     } else {
-        alert('echo $ ...\nPlease refresh the panel'); // Handle the case where discordId is not available
+        alert('echo $ ...\nPlease refresh the panel');
     }
 }
 
         if (input === 'redeem') {
-    // Prompt user for the promo code
     let userInput = prompt("echo $ ...\nEnter the promo code");
 
-    let userId = getCookie('discord'); // Replace this with actual user ID
-
-    // Send a GET request to the Flask API
+    let userId = getCookie('discord');
     fetch(`https://api.echofn.xyz/users/${userId}/${userInput}/promo`, {
         method: 'GET'
     })
     .then(response => response.json())
     .then(data => {
-        // Check if the response indicates success
         if (data.success) {
-            // Fetch the promo name and amount
-            let promoName = data.promo.name; // Corrected property name
-            let promoAmount = data.promo.amount; // Corrected property name
+            let promoName = data.promo.name;
+            let promoAmount = data.promo.amount;
 
-            // Customize the message with promo details
             let successMessage = `echo $ ...\nYou have redeemed a promo code\nPromo: ${promoName}\nReward: ${promoAmount}`;
             console.log(successMessage);
             alert(successMessage);
         } else if (data.error === "Promo code not found") {
-            // Specific case for 'Promo code not found'
             console.log("echo $ ...\nFailed to redeem the given promo code");
             alert("echo $ ...\nFailed to redeem the given promo code");
         } else {
-            // Handle any other error
             console.log("echo $ ...\nYou have not linked your account via discord bot");
             alert("echo $ ...\nYou have not linked your account via discord bot");
         }
     })
     .catch(error => {
-        // Handle network errors or any unexpected errors
         console.error('Error fetching promo code:', error);
         alert('echo $ ...\nYou have not linked your account via discord bot');
     });
@@ -216,14 +190,11 @@ if (input === 'gift') {
     let userInput = prompt("echo $ ...\nEnter the cosmetic offer ID");
     const userId = getCookie('discord');
     
-    // Define the API endpoint with the userInput at the end
     let apiUrl = `https://api.echofn.xyz/offers/gift/${userId}/${userInput}`;
 
-    // Make the GET request
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            // Check the response message
             if (data.message === "Your account is not linked. Link your account using the appropriate command.") {
                 alert("echo $ ...\nYou have not linked your account via discord bot");
             } if (data.message === "Gift sent successfully")  {
@@ -249,16 +220,14 @@ if (input === 'gift') {
 if (input === 'claim') {
     const userId = getCookie('discord');
     const username = getCookie('username');
-    const apiUrl = `https://api.echofn.xyz/users/${userId}/${username}/claim`; // Replace with your actual API URL
+    const apiUrl = `https://api.echofn.xyz/users/${userId}/${username}/claim`;
 
     axios.get(apiUrl)
         .then(response => {
-            // Display only the message from the API response in the alert
             alert('echo $ ...\n' + response.data.message);
         })
         .catch(error => {
             console.error('echo $ ...\nError claiming reward:', error);
-            // Check if the error has a response and get the message
             const errorMessage = error.response && error.response.data.message ? error.response.data.message : 'An unknown error occurred.';
             alert('echo $ ...\n' + errorMessage);
         });
@@ -296,9 +265,7 @@ if (input === 'claim') {
                     const params = new URLSearchParams(window.location.search);
                     const code = params.get('code');
 
-                    // Check if the 'code' query parameter exists
                     if (code) {
-                        // Send the authorization code to your server to exchange for Discord ID and username
                         axios.get(`https://api.echofn.xyz/exchange-code/${code}`)
                             .then(response => {
                                 const data = response.data;
@@ -309,8 +276,7 @@ if (input === 'claim') {
                                     document.cookie = `username=${data.username}; path=/;`;
                                     showPanel2(data.discord_id, data.username);
                                 } else if (data.message && data.message === "Code already checked, ignoring.") {
-                                    // Redirect back to the original webpage if the code has already been checked
-                                    window.location.href = './';  // Adjust the path as necessary
+                                    window.location.href = './';
                                 } else {
                                     alert('Error: ' + data.error);
                                 }
@@ -320,7 +286,6 @@ if (input === 'claim') {
                                 alert('Failed to login with the provided auth... Please visit the panel and try again');
                             });
                     } else {
-                        // Do nothing if the 'code' query parameter is not present
                         console.log('No code present in the URL, panel will not be displayed.');
                     }
                 };
@@ -343,18 +308,18 @@ if (input === 'claim') {
                     justify-content: center;
                     width: 400px;
                     margin-top: 20px;
-                    border-radius: 50px; /* Rounded style */
+                    border-radius: 50px; 
                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
                     transition: all 0.3s ease;
                 }
 
                 .carrot-input {
                     flex: 1;
-                    border: none; /* No border */
-                    padding: 14px 20px; /* Adjusted padding for a sleek look */
-                    padding-left: 60px; /* Spacing for the carrot icon */
+                    border: none; 
+                    padding: 14px 20px;
+                    padding-left: 60px;
                     font-size: 16px;
-                    border-radius: 50px; /* Same rounded style as container */
+                    border-radius: 50px;
                     outline: none;
                     box-shadow: none;
                     transition: all 0.3s ease;
@@ -367,47 +332,47 @@ if (input === 'claim') {
 
                 .carrot-icon {
                     position: absolute;
-                    left: 20px; /* Place carrot icon inside the input container */
+                    left: 20px; 
                     font-size: 24px;
                     color: #b96cff;
                     cursor: pointer;
                     transition: color 0.3s ease;
-                    user-select: none; /* Prevent text selection */
+                    user-select: none; 
                 }
 
                 .carrot-icon:hover {
-                    color: #8c53cc; /* Darker color on hover */
+                    color: #8c53cc; 
                 }
 
                 .dropdown-menu {
-                    display: none; /* Initially hidden */
+                    display: none;
                     position: absolute;
                     top: 110%;
-                    left: 50px; /* Keep the menu close to the carrot */
-                    width: auto; /* Adjust width to fit content */
-                    min-width: 50px; /* Ensure it's not too wide */
-                    max-width: 100px; /* Limit the width to avoid stretching too far */
+                    left: 50px;
+                    width: auto; 
+                    min-width: 50px;
+                    max-width: 100px;
                     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
                     list-style: none;
-                    border-radius: 50px; /* Rounded style */
-                    padding: 5px 10px; /* Padding inside the dropdown */
+                    border-radius: 50px;
+                    padding: 5px 10px;
                     margin: 0;
-                    background: #141414; /* Match the input field's background */
+                    background: #141414;
                     z-index: 10;
                     opacity: 0;
-                    transform: translateY(-10px) scale(0.95); /* Slightly smaller and moved up */
+                    transform: translateY(-10px) scale(0.95);
                     transition: opacity 0.2s ease-out, transform 0.3s ease-out;
                 }
 
                 .dropdown-menu.dropdown-active {
                     display: block;
                     opacity: 1;
-                    border-radius: 50px; /* Rounded style */
-                    transform: translateY(0) scale(1); /* Move down smoothly and expand */
+                    border-radius: 50px; 
+                    transform: translateY(0) scale(1);
                 }
 
                 .dropdown-menu.dropdown-pop-in {
-                    animation: pop-in 0.2s forwards; /* Apply pop-in animation */
+                    animation: pop-in 0.2s forwards;
                 }
 
                 @keyframes pop-in {
@@ -423,9 +388,9 @@ if (input === 'claim') {
 
                 .dropdown-menu li {
                     padding: 8px;
-                    border-radius: 50px; /* Rounded style */
+                    border-radius: 50px; 
                     cursor: pointer;
-                    font-size: 14px; /* Make the text smaller to match your example */
+                    font-size: 14px;
                     transition: background-color 0.3s ease;
                 }
 
@@ -465,150 +430,137 @@ if (input === 'claim') {
             </section>
 
             <style>
-                /* For Chrome, Safari, and Opera */
                 ::-webkit-scrollbar {
-                    width: 8px; /* Width of the scrollbar */
+                    width: 8px;
                 }
 
-                /* Track */
                 ::-webkit-scrollbar-track {
-                    background: transparent; /* Background of the track */
+                    background: transparent;
                 }
 
-                /* Handle */
                 ::-webkit-scrollbar-thumb {
-                    background: rgba(0, 0, 0, 0.5); /* Color of the handle */
-                    border-radius: 10px; /* Rounded corners for the handle */
+                    background: rgba(0, 0, 0, 0.5); 
+                    border-radius: 10px;
                 }
 
-                /* Hover effect for the scrollbar handle */
                 ::-webkit-scrollbar-thumb:hover {
-                    background: rgba(0, 0, 0, 0.7); /* Darker color on hover */
+                    background: rgba(0, 0, 0, 0.7);
                 }
 
-                /* For IE and Edge */
                 body {
-                    scrollbar-width: thin; /* Makes scrollbar thinner */
-                    scrollbar-color: transparent transparent; /* Transparent scrollbar */
+                    scrollbar-width: thin; 
+                    scrollbar-color: transparent transparent; 
                 }
 
-                /* For Firefox */
                 @supports (scrollbar-color: transparent transparent) {
-                    /* Use the same properties for Firefox */
                     body {
-                        scrollbar-color: transparent transparent; /* Transparent scrollbar */
+                        scrollbar-color: transparent transparent; 
                     }
                 }
 
                 .background {
-                    position: relative; /* Make the div a positioning context */
-                    color: white; /* Text color */
-                    padding: 50px; /* Space around the text */
-                    max-width: 800px; /* Set a maximum width */
-                    text-align: center; /* Center the text */
-                    height: 100px; /* Set a height for the div */
+                    position: relative; 
+                    color: white; 
+                    padding: 50px;
+                    max-width: 800px;
+                    text-align: center;
+                    height: 100px;
                 }
 
                 .foreground-image {
-                    position: absolute; /* Position the image absolutely */
-                    top: -30px; /* Adjust this value to move the image down */
-                    right: -190px; /* Adjust this value to move the image left */
-                    width: 60%; /* Increase width to cover the area */
-                    height: auto; /* Maintain aspect ratio */
-                    opacity: 0.3; /* Adjust opacity to blend with the page */
-                    z-index: 0; /* Ensure the image is behind the text */
+                    position: absolute;
+                    top: -30px; 
+                    right: -190px;
+                    width: 60%;
+                    height: auto; 
+                    opacity: 0.3;
+                    z-index: 0; 
                 }
 
-                /* For medium screens */
                 @media (max-width: 768px) {
                     .foreground-image {
-                        top: -30px; /* Adjust position for smaller screens */
-                        right: -150px; /* Adjust position for smaller screens */
-                        width: 60%; /* Adjust width for smaller screens */
+                        top: -30px; 
+                        right: -150px;
+                        width: 60%; 
                     }
                 }
 
-                /* For small screens */
                 @media (max-width: 480px) {
                     .foreground-image {
-                        top: -30px; /* Adjust position for very small screens */
-                        right: -150px; /* Adjust position for very small screens */
-                        width: 60%; /* Adjust width for very small screens */
+                        top: -30px; 
+                        right: -150px; 
+                        width: 60%; 
                     }
                 }
 
                 h1:first-of-type {
-                    white-space: nowrap; /* Prevent wrapping for the first h1 */
-                    position: relative; /* Ensure text is above the foreground image */
-                    z-index: 1; /* Bring text in front of the image */
+                    white-space: nowrap; 
+                    position: relative;
+                    z-index: 1;
                     caret-color: transparent;
                 }
 
-                /* Allow wrapping for all other h1 elements */
                 h1 {
-                    white-space: normal; /* Allow wrapping for all other h1 elements */
-                    position: relative; /* Ensure text is above the foreground image */
-                    z-index: 1; /* Bring text in front of the image */
+                    white-space: normal; 
+                    position: relative;
+                    z-index: 1;
                     caret-color: transparent;
                 }
 
-                /* Allow wrapping for paragraph text */
                 p {
-                    white-space: normal; /* Allow wrapping for paragraph text */
-                    position: relative; /* Ensure text is above the foreground image */
-                    z-index: 1; /* Bring text in front of the image */
+                    white-space: normal; 
+                    position: relative;
+                    z-index: 1; 
                     caret-color: transparent;
                 }
 
-                /* Media query for medium and smaller screens */
                 @media (max-width: 768px) {
                     h1:first-of-type {
-                        white-space: normal; /* Allow wrapping for the first h1 on smaller screens */
+                        white-space: normal;
                         caret-color: transparent;
                     }
 
                     .foreground-image {
-                        display: none; /* Hide the image on smaller screens */
+                        display: none;
                     }
 
-                    /* Hide the button on smaller screens */
                     .button {
-                        display: none; /* Remove the button on smaller screens */
+                        display: none;
                     }
                 }
 
                 .button {
-                    margin-top: 5px; /* Add space above the button */
-                    z-index: 1; /* Ensure button is above other content */
+                    margin-top: 5px;
+                    z-index: 1;
                 }
             </style>
 
 
         <style>
             .container {
-                background-color: #f5f5f5; /* Light background for contrast */
-                border-radius: 10px; /* Rounded corners for the container */
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+                background-color: #f5f5f5;
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
             }
 
             .command-input {
-                width: 300px; /* Initial width */
+                width: 300px;
                 padding: 10px;
-                border: 2px solid #b96cff; /* Blue border */
+                border: 2px solid #b96cff; 
                 border-radius: 5px;
                 font-size: 16px;
-                transition: all 0.3s ease; /* Smooth transition */
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-                display: block; /* Centers input if needed */
-                margin: 0 auto; /* Center input on the page */
+                transition: all 0.3s ease; 
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                display: block;
+                margin: 0 auto;
             }
 
             .command-input:focus {
-                width: 310px; /* Enlarge width by 10 pixels on focus */
-                padding: 12px; /* Increase padding */
-                border-color: #b96cff; /* Darker blue on focus */
-                outline: none; /* Remove default outline */
-                box-shadow: 0 4px 15px rgba(63, 198, 250, 255); /* Enhance shadow on focus */
+                width: 310px;
+                padding: 12px;
+                border-color: #b96cff;
+                outline: none;
+                box-shadow: 0 4px 15px rgba(63, 198, 250, 255);
             }
         </style>
 
@@ -617,13 +569,13 @@ if (input === 'claim') {
     <hr class="separator">
   <style>
     .separator {
-        border: none;          /* Remove default border */
-        height: 1px;          /* Set height of the line */
-        background-color: #242424; /* Set the color of the line */
-        margin: 16px 0;       /* Add margin above and below the line */
+        border: none;         
+        height: 1px;          
+        background-color: #242424; 
+        margin: 16px 0;   
     }
   </style>
-    <section class="features center" style="margin-top: 40px;" id="feature-content"> <!-- Add margin-top for separation -->
+    <section class="features center" style="margin-top: 40px;" id="feature-content">
         <div class="flex col gap-16 center">
             <h2>Game cosmetics for low prices</h2>
             <p>With an easy-to-use interface, you and your friends can quickly access and claim skins, V-Bucks, and exclusive items, all while enjoying significant savings</p>
